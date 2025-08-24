@@ -324,7 +324,7 @@ class GPT(nn.Module):
             # forward the model to get the logits for the index in the sequence
             logits, _ = self(idx_cond)
             # pluck the logits at the final step # and scale by desired temperature
-            logits = logits[:, -1, :] / temperature
+            logits = logits[:, -1, :] #/ temperature
             # optionally crop the logits to only the top k options
             if top_k is not None:
                 v, _ = torch.topk(logits, min(top_k, logits.size(-1)))
@@ -333,6 +333,7 @@ class GPT(nn.Module):
             # probs = F.softmax(logits, dim=-1)
             # Use sparsemax instead of softmax
             probs = relu15(logits)
+            probs = probs ** (1 / temperature)
             # sample from the distribution
             idx_next = torch.multinomial(probs, num_samples=1)
             # append sampled index to the running sequence and continue

@@ -14,8 +14,8 @@ based on the Tsallis entropy.
 | Letter | Score Rule         | Top-K    | Control | Test T=1.0 | Test T=0.8 | Test T=0.1 |
 |--------|--------------------|----------|---------|------------|------------|------------|
 | c      | Cross-entropy      | 200      | 3.09%   | 5.29%      | 6.64%      | 7.26%      |
-| c      | $\alpha$-ReLU      | 200      | 3.41%   | 4.66%      | 4.75%      | 4.33%      |
-| c      | $\alpha$-ReLU      | $\infty$ | 3.41%   | 3.87%      | 4.00%      | 3.49%      |
+| c      | $\alpha$-ReLU      | 200      | 3.41%   | 4.66%      | 7.54%      | 31.66%      |
+| c      | $\alpha$-ReLU      | $\infty$ | 3.41%   | 3.87%      | 5.94%      | 31.66%      |
 
 
 ## Introduction

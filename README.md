@@ -1,6 +1,24 @@
 
-# nanoGPT
+# nanoGPT tokenizer experiment
+This is a fork of https://github.com/brendanlong/nanoGPT/tree/tokenizer-experiment which is in turn a fork of https://github.com/karpathy/nanoGPT.
 
+The purpose of Brendan's fork is to experiment with how chaning the tokenizer affects sampling, especially as temperature and top-k vary.
+He trains with a tokenizer that splits the Cs at the beginning of words, and shows that this leads to many more words beginning with C
+in the sampled output.
+
+The purpose of *my* fork is to test whether this can be ameliorated by changing the loss function when training to use a different
+scoring rule. Instead of using cross-entropy loss, this fork trains with $\alpha$-ReLU loss, which is a proper scoring rule
+based on the Tsallis entropy.
+
+## Results
+| Letter | Score Rule         | Top-K    | Control | Test T=1.0 | Test T=0.8 | Test T=0.1 |
+|--------|--------------------|----------|---------|------------|------------|------------|
+| c      | Cross-entropy      | 200      | 3.09%   | 5.29%      | 6.64%      | 7.26%      |
+| c      | $\alpha$-ReLU      | 200      | 3.41%   | 4.66%      | 4.75%      | 4.33%      |
+| c      | $\alpha$-ReLU      | $\infty$ | 3.41%   | 3.87%      | 4.00%      | 3.49%      |
+
+
+## Introduction
 ![nanoGPT](assets/nanogpt.jpg)
 
 The simplest, fastest repository for training/finetuning medium-sized GPTs. It is a rewrite of [minGPT](https://github.com/karpathy/minGPT) that prioritizes teeth over education. Still under active development, but currently the file `train.py` reproduces GPT-2 (124M) on OpenWebText, running on a single 8XA100 40GB node in about 4 days of training. The code itself is plain and readable: `train.py` is a ~300-line boilerplate training loop and `model.py` a ~300-line GPT model definition, which can optionally load the GPT-2 weights from OpenAI. That's it.

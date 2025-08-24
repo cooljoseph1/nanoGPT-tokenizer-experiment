@@ -345,8 +345,9 @@ while True:
     if iter_num > max_iters:
         break
     if early_stop:
-        print(f"Stopping training at iteration {iter_num} due to early stopping")
-        break
+        pass
+        # print(f"Stopping training at iteration {iter_num} due to early stopping")
+        # break
 
 if ddp:
     destroy_process_group()
